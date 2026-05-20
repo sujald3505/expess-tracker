@@ -1,78 +1,167 @@
-import React from 'react'
-import {BrowserRouter,Routes,Route, Navigate} from "react-router";
+// import React from 'react'
+// import {BrowserRouter,Routes,Route, Navigate} from "react-router";
 
-import Register from './pages/Register';
-import Login from './pages/Login';
+// import Register from './pages/Register';
+// import Login from './pages/Login';
 
-import MainLayout from './layouts/MainLayout';
-import ProtectedRoute from './routes/ProtectedRoute';
-import PublicRoute from './routes/PublicRoute';
+// import MainLayout from './layouts/MainLayout';
+// import ProtectedRoute from './routes/ProtectedRoute';
+// import PublicRoute from './routes/PublicRoute';
 
+// import Users from './pages/admin/User';
 
-import Users from './pages/admin/User';
+// import AdminDashboard from './pages/admin/AdminDashboard';
+// import AdminLayout from './layouts/AdminLayout';
+// import Transactions from './pages/admin/Transaction';
+// import Categories from './pages/admin/Categories';
+// import Reports from './pages/admin/Reports';
+// import Setting from './pages/admin/Setting';
 
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminLayout from './layouts/AdminLayout';
-import Transactions from './pages/admin/Transaction';
-import Categories from './pages/admin/Categories';
-import Reports from './pages/admin/Reports';
-import Setting from './pages/admin/Setting';
+// import UserLayout from './layouts/UserLayout';
+// import Dashboard from './pages/user/Dashboard';
+// import AddTransaction from './pages/user/AddTransaction';
+// import UserTransaction from './pages/user/UserTransactions';
+// import UserReport from './pages/user/UserReports';
+// import Profile from './pages/user/Profile';
 
+// const App = () => {
+//   return (
+//     <BrowserRouter>
+//       {/* <ToastContainer /> */}
 
-import UserLayout from './layouts/UserLayout';
-import Dashboard from './pages/user/Dashboard';
-import AddTransaction from './pages/user/AddTransaction';
-import UserTransaction from './pages/user/UserTransactions';
-import UserReport from './pages/user/UserReports';
-import Profile from './pages/user/Profile';
+//         <Routes>
+//             <Route element={<MainLayout />}>
+
+//               {/* public route */}
+//               <Route element={<PublicRoute />}>
+//                   <Route path="/register" element={<Register />}/>
+//                   <Route path="/login" element={<Login />}/>
+//               </Route>
+
+//               {/* Protected Routes  */}
+//               <Route element={<ProtectedRoute />}>
+
+//                   {/* admin */}
+//                   <Route path='/admin/user' element={<Users />}/>
+//                   <Route path='/admin'element={<AdminLayout />}/>
+//                   <Route path='/admin/dashboard' element={<AdminDashboard />}/>
+
+//                   <Route path='/transaction' element={<Transactions />}/>
+//                   <Route path='/category' element={<Categories />}/>
+//                   <Route path='/reports' element={<Reports />}/>
+//                   <Route path='/setting' element={<Setting />}/>
+
+//                   {/* userside */}
+
+//                   <Route path='/user/layout' element={<UserLayout />}/>
+//                   <Route path='/user/dashboard' element={<Dashboard />}/>
+//                   <Route path='/user/addtransaction' element={<AddTransaction />}/>
+//                   <Route path='/user/transaction' element={<UserTransaction />}/>
+//                   <Route path='/user/report' element={<UserReport />}/>
+//                   <Route path='/user/profile' element={<Profile />}/>
+
+//               </Route>
+
+//               {/* Default Route */}
+//                <Route path="*" element={<Navigate to="/login" />} />
+
+//             </Route>
+
+//         </Routes>
+//     </BrowserRouter>
+//   )
+// }
+
+// export default App
+import React from "react";
+
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+
+import MainLayout from "./layouts/MainLayout";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+
+import PublicRoute from "./routes/PublicRoute";
+
+// ADMIN
+import Users from "./pages/admin/User";
+
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
+import Transactions from "./pages/admin/Transaction";
+
+import Categories from "./pages/admin/Categories";
+
+import Reports from "./pages/admin/Reports";
+
+import Setting from "./pages/admin/Setting";
+
+// USER
+import Dashboard from "./pages/user/Dashboard";
+
+import AddTransaction from "./pages/user/AddTransaction";
+
+import UserTransaction from "./pages/user/UserTransactions";
+
+import UserReport from "./pages/user/UserReports";
+
+import Profile from "./pages/user/Profile";
+
+import Settings from "./pages/user/Settings";
 
 const App = () => {
   return (
     <BrowserRouter>
-      {/* <ToastContainer /> */}
+      <Routes>
+        <Route element={<MainLayout />}>
+          {/* PUBLIC ROUTES */}
+          <Route element={<PublicRoute />}>
+            {/* DEFAULT REGISTER */}
+            <Route path="/" element={<Register />} />
 
+            <Route path="/register" element={<Register />} />
 
-        <Routes>
-            <Route element={<MainLayout />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
 
-              {/* public route */}
-              <Route element={<PublicRoute />}>
-                  <Route path="/register" element={<Register />}/>
-                  <Route path="/login" element={<Login />}/>
-              </Route>
-            
-              {/* Protected Routes  */}
-              <Route element={<ProtectedRoute />}>
-                
-                  {/* admin */}
-                  <Route path='/admin/user' element={<Users />}/>
-                  <Route path='/admin'element={<AdminLayout />}/>
-                  <Route path='/admin/dashboard' element={<AdminDashboard />}/>
-               
-                  <Route path='/transaction' element={<Transactions />}/>
-                  <Route path='/category' element={<Categories />}/>
-                  <Route path='/reports' element={<Reports />}/>
-                  <Route path='/setting' element={<Setting />}/>
+          {/* PROTECTED ROUTES */}
+          <Route element={<ProtectedRoute />}>
+            {/* ADMIN */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-                  {/* userside */}
+            <Route path="/admin/user" element={<Users />} />
 
-                  <Route path='/user/layout' element={<UserLayout />}/>
-                  <Route path='/user/dashboard' element={<Dashboard />}/>
-                  <Route path='/user/addtransaction' element={<AddTransaction />}/>
-                  <Route path='/user/transaction' element={<UserTransaction />}/>
-                  <Route path='/user/report' element={<UserReport />}/>
-                  <Route path='/user/profile' element={<Profile />}/>
+            <Route path="/transaction" element={<Transactions />} />
 
-              </Route>
+            <Route path="/category" element={<Categories />} />
 
-              {/* Default Route */}
-               <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="/reports" element={<Reports />} />
 
-            </Route>
+            <Route path="/setting" element={<Setting />} />
 
-        </Routes>
+            {/* USER */}
+            <Route path="/user/dashboard" element={<Dashboard />} />
+
+            <Route path="/user/addtransaction" element={<AddTransaction />} />
+
+            <Route path="/user/transaction" element={<UserTransaction />} />
+
+            <Route path="/user/report" element={<UserReport />} />
+
+            <Route path="/user/profile" element={<Profile />} />
+
+            <Route path="/user/setting" element={<Settings />}/>
+          </Route>
+
+          {/* NOT FOUND */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;

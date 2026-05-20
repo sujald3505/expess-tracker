@@ -17,9 +17,13 @@
 // app.listen(PORT,() =>{
 //     console.log(`server is running at http://localhost:${PORT}`);
 // })
+import path from "path";
+
 import express from "express";
 
 import cors from "cors";
+
+
 
 import { connectDB } from "./config/connectDB.js";
 
@@ -36,10 +40,7 @@ app.use(express.json());
 app.use(cors());
 
 // STATIC UPLOAD FOLDER
-app.use(
-  "/uploads",
-  express.static("uploads")
-);
+app.use("/uploads", express.static("uploads"));
 
 // ROUTES
 app.use("/api", route);
@@ -47,8 +48,5 @@ app.use("/api", route);
 const PORT = 8080;
 
 app.listen(PORT, () => {
-
-  console.log(
-    `server is running at http://localhost:${PORT}`
-  );
+  console.log(`server is running at http://localhost:${PORT}`);
 });

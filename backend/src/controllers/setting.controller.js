@@ -1,36 +1,141 @@
-import { setting } from "../models/setting.model.js";
+// import { setting } from "../models/setting.model.js";
 
-export const getSettings = async (req, res) => {
-  try {
-    let settings = await Setting.findOne();
-    if (!setting) {
-      setting = await setting.create({
-        currency: "INR",
-        theme: "light",
+// export const getSettings = async (req, res) => {
+//   try {
+//     let settings = await Setting.findOne();
+//     if (!setting) {
+//       setting = await setting.create({
+//         currency: "INR",
+//         theme: "light",
+//       });
+//     }
+//     res.status(200).json({ success: true, setting });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message || "Internal Server Error" });
+//   }
+// };
+
+// export const updateSettings = async (req, res) => {
+//   try {
+//     const { currency, theme } = req.body;
+//     let settings = await Setting.findOne();
+//     if (!settings) {
+//       settings = await settings.create({
+//         currency,
+//         theme,
+//       });
+//     } else {
+//       settings.currency = currency;
+//       setting.theme = theme;
+//       await settings.save();
+//     }
+//     res.status(200).json({ success: true,settings,message: "Settings Updated Successfully",});
+//   } catch (error) {
+//             res.status(500).json({ message: error.message,});
+//   }
+// };
+
+import { Setting } from "../models/setting.model.js";
+
+// ============================
+// GET SETTINGS
+// ============================
+
+export const getSettings =
+  async (req, res) => {
+
+    try {
+
+      let settings =
+        await Setting.findOne();
+
+      // CREATE DEFAULT SETTINGS
+      if (!settings) {
+
+        settings =
+          await Setting.create({
+
+            currency: "INR",
+
+            theme: "light",
+          });
+      }
+
+      res.status(200).json({
+
+        success: true,
+
+        settings,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        message:
+          error.message ||
+          "Internal Server Error",
       });
     }
-    res.status(200).json({ success: true, setting });
-  } catch (error) {
-    res.status(500).json({ message: error.message || "Internal Server Error" });
-  }
-};
+  };
 
-export const updateSettings = async (req, res) => {
-  try {
-    const { currency, theme } = req.body;
-    let settings = await Setting.findOne();
-    if (!settings) {
-      settings = await settings.create({
+// ============================
+// UPDATE SETTINGS
+// ============================
+
+export const updateSettings =
+  async (req, res) => {
+
+    try {
+
+      const {
         currency,
         theme,
+      } = req.body;
+
+      let settings =
+        await Setting.findOne();
+
+      // CREATE SETTINGS
+      if (!settings) {
+
+        settings =
+          await Setting.create({
+
+            currency,
+
+            theme,
+          });
+
+      } else {
+
+        // UPDATE
+        settings.currency =
+          currency;
+
+        settings.theme =
+          theme;
+
+        await settings.save();
+      }
+
+      res.status(200).json({
+
+        success: true,
+
+        settings,
+
+        message:
+          "Settings Updated Successfully",
       });
-    } else {
-      settings.currency = currency;
-      setting.theme = theme;
-      await settings.save();
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        message:
+          error.message ||
+          "Internal Server Error",
+      });
     }
-    res.status(200).json({ success: true,settings,message: "Settings Updated Successfully",});
-  } catch (error) {
-            res.status(500).json({ message: error.message,});
-  }
-};
+  };
