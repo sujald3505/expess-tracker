@@ -4,6 +4,7 @@ import transactionRoute from "./transactionRoutes.js";
 import categoryRoutes from "./category.routes.js";
 import reportRoutes from "./report.routes.js";
 import settingRoute from "./setting.route.js";
+import adminRoute from "./admin.routes.js";
 
 export const route = Router();
 
@@ -14,3 +15,4 @@ route.use("/transaction",transactionRoute)
 route.use("/category",categoryRoutes)
 route.use("/report",reportRoutes)
 route.use("/setting",settingRoute)
+route.use("/admin",adminRoute)

@@ -171,68 +171,49 @@
 // };
 
 // export default AddTransaction;
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import UserLayout from "../../layouts/UserLayout";
 
 const AddTransaction = () => {
+  const [categories, setCategories] = useState([]);
 
-  const [categories, setCategories] =
-    useState([]);
-
-  const [formData, setFormData] =
-    useState({
-      title: "",
-      amount: "",
-      type: "expense",
-      category: "",
-      date: "",
-    });
+  const [formData, setFormData] = useState({
+    title: "",
+    amount: "",
+    type: "expense",
+    category: "",
+    date: "",
+  });
 
   // ============================
   // GET CATEGORIES
   // ============================
 
-  const getCategories =
-    async () => {
+  const getCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/category");
 
-      try {
+      const data = await response.json();
 
-        const response =
-          await fetch(
-            "http://localhost:8080/api/category"
-          );
+      console.log(data);
 
-        const data =
-          await response.json();
-
-        console.log(data);
-
-        setCategories(
-          data.categories
-        );
-
-      } catch (error) {
-
-        console.log(error);
-      }
-    };
+      setCategories(data.categories);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // ============================
   // HANDLE CHANGE
   // ============================
 
   const handleChange = (e) => {
-
     setFormData({
-
       ...formData,
 
-      [e.target.name]:
-        e.target.value,
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -240,101 +221,66 @@ const AddTransaction = () => {
   // ADD TRANSACTION
   // ============================
 
-  const handleSubmit =
-    async (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
 
-      try {
+      const response = await fetch("http://localhost:8080/api/transaction", {
+        method: "POST",
 
-        const token =
-          localStorage.getItem(
-            "token"
-          );
+        headers: {
+          "Content-Type": "application/json",
 
-        const response =
-          await fetch(
-            "http://localhost:8080/api/transaction",
-            {
-              method: "POST",
+          Authorization: `Bearer ${token}`,
+        },
 
-              headers: {
-                "Content-Type":
-                  "application/json",
+        body: JSON.stringify(formData),
+      });
 
-                Authorization: `Bearer ${token}`,
-              },
+      const data = await response.json();
 
-              body: JSON.stringify(
-                formData
-              ),
-            }
-          );
+      console.log(data);
 
-        const data =
-          await response.json();
+      toast.success("Transaction Added");
 
-        console.log(data);
-
-        alert(
-          "Transaction Added Successfully"
-        );
-
-        // RESET FORM
-        setFormData({
-          title: "",
-          amount: "",
-          type: "expense",
-          category: "",
-          date: "",
-        });
-
-      } catch (error) {
-
-        console.log(error);
-      }
-    };
+      // RESET FORM
+      setFormData({
+        title: "",
+        amount: "",
+        type: "expense",
+        category: "",
+        date: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // ============================
   // USE EFFECT
   // ============================
 
   useEffect(() => {
-
     getCategories();
-
   }, []);
 
   return (
-
     <UserLayout>
-
       <div className="w-full min-h-screen bg-gray-100 p-6">
-
         {/* PAGE TITLE */}
         <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-800">Add Transaction</h1>
 
-          <h1 className="text-4xl font-bold text-gray-800">
-            Add Transaction
-          </h1>
-
-          <p className="text-gray-500 mt-2">
-            Add your income and expenses
-          </p>
-
+          <p className="text-gray-500 mt-2">Add your income and expenses</p>
         </div>
 
         {/* FORM */}
         <div className="bg-white rounded-2xl shadow-lg p-8 max-w-3xl">
-
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
-
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* TITLE */}
             <div>
-
               <label className="block text-gray-700 font-semibold mb-2">
                 Title
               </label>
@@ -348,12 +294,10 @@ const AddTransaction = () => {
                 className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
                 required
               />
-
             </div>
 
             {/* AMOUNT */}
             <div>
-
               <label className="block text-gray-700 font-semibold mb-2">
                 Amount
               </label>
@@ -367,12 +311,10 @@ const AddTransaction = () => {
                 className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
                 required
               />
-
             </div>
 
             {/* TYPE */}
             <div>
-
               <label className="block text-gray-700 font-semibold mb-2">
                 Type
               </label>
@@ -383,22 +325,14 @@ const AddTransaction = () => {
                 onChange={handleChange}
                 className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
               >
+                <option value="income">Income</option>
 
-                <option value="income">
-                  Income
-                </option>
-
-                <option value="expense">
-                  Expense
-                </option>
-
+                <option value="expense">Expense</option>
               </select>
-
             </div>
 
             {/* CATEGORY */}
             <div>
-
               <label className="block text-gray-700 font-semibold mb-2">
                 Category
               </label>
@@ -410,30 +344,18 @@ const AddTransaction = () => {
                 className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
                 required
               >
+                <option value="">Select Category</option>
 
-                <option value="">
-                  Select Category
-                </option>
-
-                {categories.map(
-                  (item) => (
-
-                    <option
-                      key={item._id}
-                      value={item.name}
-                    >
-                      {item.name}
-                    </option>
-                  )
-                )}
-
+                {categories.map((item) => (
+                  <option key={item._id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
-
             </div>
 
             {/* DATE */}
             <div>
-
               <label className="block text-gray-700 font-semibold mb-2">
                 Date
               </label>
@@ -446,7 +368,6 @@ const AddTransaction = () => {
                 className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
                 required
               />
-
             </div>
 
             {/* BUTTON */}
@@ -456,13 +377,9 @@ const AddTransaction = () => {
             >
               Add Transaction
             </button>
-
           </form>
-
         </div>
-
       </div>
-
     </UserLayout>
   );
 };

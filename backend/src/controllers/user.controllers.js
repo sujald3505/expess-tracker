@@ -116,7 +116,7 @@ export const JWT_SECRET_KEY = "MY_SECRET_KEY";
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // CHECK USER
     const existingUser = await User.findOne({
@@ -137,10 +137,9 @@ export const registerUser = async (req, res) => {
     // CREATE USER
     const user = await User.create({
       name,
-
       email,
-
       password: hashedPassword,
+      role: role || "USER"
     });
 
     res.status(201).json({

@@ -89,7 +89,7 @@
 //               key={menu.path}
 //               to={menu.path}
 //               className={`flex items-center h-[55px] px-5 rounded-xl text-lg font-medium transition-all duration-300
-              
+
 //               ${
 //                 location.pathname ===
 //                 menu.path
@@ -181,9 +181,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-const UserLayout = ({
-  children,
-}) => {
+const UserLayout = ({ children }) => {
 
   const location =
     useLocation();
@@ -197,54 +195,66 @@ const UserLayout = ({
       localStorage.getItem(
         "user"
       )
-    );
+    ) || {};
 
   // LOGOUT
-  const handleLogout = () => {
+  const handleLogout =
+    () => {
 
-    localStorage.removeItem(
-      "token"
-    );
+      localStorage.removeItem(
+        "token"
+      );
 
-    localStorage.removeItem(
-      "user"
-    );
+      localStorage.removeItem(
+        "user"
+      );
 
-    navigate("/login");
-
-  };
+      navigate("/login");
+    };
 
   const menus = [
     {
       name: "🏠 Dashboard",
-      path: "/user/dashboard",
+
+      path:
+        "/user/dashboard",
     },
 
     {
-      name: "➕ Add Transaction",
+      name:
+        "➕ Add Transaction",
+
       path:
         "/user/addtransaction",
     },
 
     {
-      name: "💰 Transactions",
+      name:
+        "💰 Transactions",
+
       path:
         "/user/transaction",
     },
 
     {
       name: "📊 Reports",
-      path: "/user/report",
+
+      path:
+        "/user/report",
     },
 
     {
       name: "👤 Profile",
-      path: "/user/profile",
+
+      path:
+        "/user/profile",
     },
 
     {
       name: "⚙️ Settings",
-      path: "/user/setting",
+
+      path:
+        "/user/setting",
     },
   ];
 
@@ -266,23 +276,37 @@ const UserLayout = ({
         {/* MENUS */}
         <div className="flex-1 p-4 space-y-3 overflow-y-auto">
 
-          {menus.map((menu) => (
+          {menus.map(
+            (menu) => (
+
+              <Link
+                key={menu.path}
+                to={menu.path}
+                className={`flex items-center h-[55px] px-5 rounded-xl text-lg font-medium transition-all duration-300
+                
+                ${
+                  location.pathname ===
+                  menu.path
+                    ? "bg-white text-black"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                {menu.name}
+              </Link>
+            )
+          )}
+
+          {/* ADMIN PANEL */}
+          {user?.role ===
+            "ADMIN" && (
 
             <Link
-              key={menu.path}
-              to={menu.path}
-              className={`flex items-center h-[55px] px-5 rounded-xl text-lg font-medium transition-all duration-300
-              
-              ${
-                location.pathname ===
-                menu.path
-                  ? "bg-white text-black"
-                  : "hover:bg-gray-800"
-              }`}
+              to="/admin/dashboard"
+              className="flex items-center h-[55px] px-5 rounded-xl text-lg font-medium transition-all duration-300 hover:bg-gray-800"
             >
-              {menu.name}
+              🛠️ Admin Panel
             </Link>
-          ))}
+          )}
 
         </div>
 
@@ -290,7 +314,9 @@ const UserLayout = ({
         <div className="p-5 border-t border-gray-800">
 
           <button
-            onClick={handleLogout}
+            onClick={
+              handleLogout
+            }
             className="w-full h-[50px] bg-red-500 hover:bg-red-600 rounded-xl text-lg font-semibold transition duration-300"
           >
             Logout
@@ -324,7 +350,8 @@ const UserLayout = ({
             <div className="text-right">
 
               <h2 className="font-semibold text-gray-800">
-                {user?.name || "User"}
+                {user?.name ||
+                  "User"}
               </h2>
 
               <p className="text-sm text-gray-500">
@@ -335,11 +362,10 @@ const UserLayout = ({
 
             <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold">
 
-              {
-                user?.name
-                  ?.charAt(0)
-                  ?.toUpperCase()
-              }
+              {user?.name
+                ?.charAt(0)
+                ?.toUpperCase() ||
+                "U"}
 
             </div>
 

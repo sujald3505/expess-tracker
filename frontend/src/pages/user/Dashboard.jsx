@@ -21,6 +21,10 @@ const Dashboard = () => {
         },
       });
 
+      if(!response.ok){
+        throw new Error("ree")
+      }
+
       const data = await response.json();
 
       setSummary(data);

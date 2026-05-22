@@ -30,64 +30,93 @@
 //         return res.status(500).json({ message: error.message || "Internal server error"});
 //     }
 // }
+
+
+
+
+
+
 import jwt from "jsonwebtoken";
 
 import { JWT_SECRET_KEY } from "../controllers/user.controllers.js";
 
 export const authenticate = async (req, res, next) => {
+
   try {
+
     // GET AUTH HEADER
-    const authHeader = req.headers.authorization;
+    const authHeader =
+      req.headers.authorization;
 
     // CHECK HEADER
     if (!authHeader) {
+
       return res.status(401).json({
-        message: "Unauthorized: Token Missing",
+        message:
+          "Unauthorized: Token Missing",
       });
     }
 
     // TOKEN FORMAT CHECK
-    if (!authHeader.startsWith("Bearer ")) {
+    if (
+      !authHeader.startsWith(
+        "Bearer "
+      )
+    ) {
+
       return res.status(401).json({
-        message: "Unauthorized: Invalid Token Format",
+        message:
+          "Unauthorized: Invalid Token Format",
       });
     }
 
     // GET TOKEN
-    const token = authHeader.split(" ")[1];
-
-    // CHECK TOKEN
-    if (!token) {
-      return res.status(401).json({
-        message: "Unauthorized: Token Not Found",
-      });
-    }
+    const token =
+      authHeader.split(" ")[1];
 
     // VERIFY TOKEN
-    const decoded = jwt.verify(token, JWT_SECRET_KEY);
+    const decoded =
+      jwt.verify(
+        token,
+        JWT_SECRET_KEY
+      );
 
-    // STORE USER ID
-    req.userId = decoded.userId;
+    // STORE USER
+    req.user = decoded;
 
     next();
+
   } catch (error) {
+
     // TOKEN EXPIRED
-    if (error.name === "TokenExpiredError") {
+    if (
+      error.name ===
+      "TokenExpiredError"
+    ) {
+
       return res.status(401).json({
-        message: "Token Expired",
+        message:
+          "Token Expired",
       });
     }
 
     // INVALID TOKEN
-    if (error.name === "JsonWebTokenError") {
+    if (
+      error.name ===
+      "JsonWebTokenError"
+    ) {
+
       return res.status(401).json({
-        message: "Invalid Token",
+        message:
+          "Invalid Token",
       });
     }
 
     // SERVER ERROR
     return res.status(500).json({
-      message: error.message || "Internal Server Error",
+      message:
+        error.message ||
+        "Internal Server Error",
     });
   }
 };

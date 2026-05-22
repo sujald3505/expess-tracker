@@ -8,21 +8,20 @@
 
 // export default reportRoute;
 
+//
 import { Router } from "express";
 
-import { getSummaryReport } from "../controllers/report.controller.js";
+import {
+  getUserAnalytics,
+  getSummaryReport,
+} from "../controllers/report.controller.js";
 
 import { authenticate } from "../middleware/authenticate.js";
 
 const reportRoute = Router();
 
-// SUMMARY REPORT
-reportRoute.get(
-  "/summary",
+reportRoute.get("/analytics", authenticate, getUserAnalytics);
 
-  authenticate,
-
-  getSummaryReport,
-);
+reportRoute.get("/summary", authenticate, getSummaryReport);
 
 export default reportRoute;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { toast } from "react-toastify";
+
 import UserLayout from "../../layouts/UserLayout";
 
 const Settings = () => {
@@ -35,7 +37,7 @@ const Settings = () => {
 
       const data = await response.json();
 
-      alert(data.message);
+      toast.success("Settings Updated Successfully");
 
       setCurrentPassword("");
 

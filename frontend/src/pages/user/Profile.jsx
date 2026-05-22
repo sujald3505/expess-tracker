@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { toast } from "react-toastify";
+
 import UserLayout from "../../layouts/UserLayout";
 
 const Profile = () => {
@@ -90,7 +92,7 @@ const Profile = () => {
 
       const data = await response.json();
 
-      alert(data.message);
+      toast.success("Profile Updated Successfully");
 
       getProfile();
     } catch (error) {

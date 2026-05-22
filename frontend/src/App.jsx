@@ -111,6 +111,7 @@ import UserReport from "./pages/user/UserReports";
 import Profile from "./pages/user/Profile";
 
 import Settings from "./pages/user/Settings";
+import AdminRoute from "./routes/AdminRoute";
 
 const App = () => {
   return (
@@ -127,9 +128,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
           </Route>
 
-          {/* PROTECTED ROUTES */}
-          <Route element={<ProtectedRoute />}>
-            {/* ADMIN */}
+          {/* ADMIN */}
+          <Route element={<AdminRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
             <Route path="/admin/user" element={<Users />} />
@@ -141,7 +141,10 @@ const App = () => {
             <Route path="/reports" element={<Reports />} />
 
             <Route path="/setting" element={<Setting />} />
+          </Route>
 
+          {/* PROTECTED ROUTES */}
+          <Route element={<ProtectedRoute />}>
             {/* USER */}
             <Route path="/user/dashboard" element={<Dashboard />} />
 
@@ -153,7 +156,7 @@ const App = () => {
 
             <Route path="/user/profile" element={<Profile />} />
 
-            <Route path="/user/setting" element={<Settings />}/>
+            <Route path="/user/setting" element={<Settings />} />
           </Route>
 
           {/* NOT FOUND */}

@@ -262,7 +262,7 @@
 //               key={menu.path}
 //               to={menu.path}
 //               className={`flex items-center h-[55px] px-5 rounded-xl text-lg font-medium transition-all duration-300
-              
+
 //               ${
 //                 activeMenu === menu.path
 //                   ? "bg-white text-black"
@@ -307,172 +307,111 @@
 
 // export default AdminLayout;
 
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 
-import {
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-  Link,
+const AdminLayout = ({ children }) => {
+  const location = useLocation();
 
-  useLocation,
+  const navigate = useNavigate();
 
-  useNavigate,
-
-} from "react-router-dom";
-
-const AdminLayout = ({
-  children,
-}) => {
-
-  const location =
-    useLocation();
-
-  const navigate =
-    useNavigate();
-
-  const [
-    activeMenu,
-    setActiveMenu,
-  ] = useState("");
+  const [activeMenu, setActiveMenu] = useState("");
 
   // ACTIVE MENU
   useEffect(() => {
-
-    setActiveMenu(
-      location.pathname
-    );
-
+    setActiveMenu(location.pathname);
   }, [location.pathname]);
 
   // MENUS
   const menus = [
-
     {
       name: "📊 Dashboard",
 
-      path:
-        "/admin/dashboard",
+      path: "/admin/dashboard",
     },
 
     {
       name: "👥 Users",
 
-      path:
-        "/admin/user",
+      path: "/admin/user",
     },
 
     {
-      name:
-        "💰 Transactions",
+      name: "💰 Transactions",
 
-      path:
-        "/transaction",
+      path: "/transaction",
     },
 
     {
-      name:
-        "📂 Categories",
+      name: "📂 Categories",
 
-      path:
-        "/category",
+      path: "/category",
     },
 
     {
-      name:
-        "📈 Reports",
+      name: "📈 Reports",
 
-      path:
-        "/reports",
+      path: "/reports",
     },
 
     {
-      name:
-        "⚙️ Settings",
+      name: "⚙️ Settings",
 
-      path:
-        "/setting",
+      path: "/setting",
     },
   ];
 
   // LOGOUT
-  const handleLogout =
-    () => {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
 
-      localStorage.removeItem(
-        "token"
-      );
-
-      navigate("/login");
-    };
+    navigate("/login");
+  };
 
   return (
-
     <div className="flex w-full min-h-screen bg-gray-100 overflow-hidden">
-
       {/* SIDEBAR */}
       <div className="w-[280px] bg-black text-white flex flex-col flex-shrink-0">
-
         {/* LOGO */}
         <div className="h-[90px] flex items-center px-6 border-b border-gray-800">
-
-          <h1 className="text-4xl font-bold">
-            Admin Panel
-          </h1>
-
+          <h1 className="text-4xl font-bold">Admin Panel</h1>
         </div>
 
         {/* MENUS */}
         <div className="flex-1 p-4 space-y-3 overflow-y-auto">
-
           {menus.map((menu) => (
-
             <Link
               key={menu.path}
-
               to={menu.path}
-
               className={`flex items-center h-[55px] px-5 rounded-xl text-lg font-medium transition-all duration-300
 
               ${
-                activeMenu ===
-                menu.path
+                activeMenu === menu.path
                   ? "bg-white text-black"
                   : "hover:bg-gray-800"
               }`}
             >
-
               {menu.name}
-
             </Link>
           ))}
-
         </div>
 
         {/* FOOTER */}
         <div className="p-5 border-t border-gray-800">
-
           <button
-            onClick={
-              handleLogout
-            }
-
+            onClick={handleLogout}
             className="w-full h-[50px] bg-red-500 hover:bg-red-600 rounded-xl text-lg font-semibold transition duration-300"
           >
             Logout
           </button>
-
         </div>
-
       </div>
 
       {/* RIGHT SIDE */}
       <div className="flex-1 flex flex-col overflow-hidden">
-
         {/* TOPBAR */}
         <div className="h-[90px] bg-white shadow-sm px-8 flex items-center justify-between">
-
           <h1 className="text-3xl font-bold text-gray-800">
             Expense Tracker Admin
           </h1>
@@ -480,18 +419,11 @@ const AdminLayout = ({
           <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold">
             A
           </div>
-
         </div>
 
         {/* PAGE CONTENT */}
-        <div className="flex-1 p-8 overflow-y-auto w-full">
-
-          {children}
-
-        </div>
-
+        <div className="flex-1 p-8 overflow-y-auto w-full">{children}</div>
       </div>
-
     </div>
   );
 };
