@@ -1,107 +1,3 @@
-// import { Users } from "../models/user.model.js";
-// import jwt from "jsonwebtoken";
-// import bcrypt from "bcrypt";
-
-// export const JWT_SECRET_KEY = "jdhgureyhj";
-
-// export const registerUser = async (req, res) => {
-//   try {
-//     const userData = req.body;
-
-//     const hasedPassword = await bcrypt.hash(userData.password, 10);
-//     userData.password = hasedPassword;
-
-//     const hasedPasswordd = await bcrypt.hash(userData.confirmPassword, 10);
-//     userData.confirmPassword = hasedPasswordd;
-
-//     const user = await Users.create(userData);
-//     res.status(201).json({ message: "User Created", user });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message || "Internal Server Error" });
-//   }
-// };
-
-// export const loginUsers = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-
-//     if (!email || !password) {
-//       return res
-//         .status(400)
-//         .json({ message: "Email and password are required" });
-//     }
-//     const user = await Users.findOne({ email });
-
-//     if (!user) {
-//       return res.status(400).json({ message: "Email is wrong" });
-//     }
-//     const isVaild = await bcrypt.compare(password, user.password);
-
-//     if (!isVaild) {
-//       return res.status(400).json({ message: " Password is wrong" });
-//     }
-
-//     const token = await jwt.sign({ userId: user.id }, JWT_SECRET_KEY, {
-//       expiresIn: "1d",
-//     });
-
-//     res.status(200).json({ message: "Login successfully", user, token });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message || "Internal Server Error" });
-//   }
-// };
-
-// export const getUsers = async (req, res) => {
-//   try {
-//     const users = await Users.find();
-//     res.status(200).json({ message: "user fetched", users });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message || "Internal Server Error" });
-//   }
-// };
-
-// export const deleteUser = async (req, res) => {
-//   try {
-//         const user = await User.findById(req.params.id);
-//         if (!user) {
-//         return res.status(404).json({ message: "User not found",});
-//         }
-
-//         await user.deleteOne();
-
-//         res.status(200).json({ success: true,message: "User deleted",});
-//   } catch (error) {
-//        res.status(500).json({ message: error.message,});
-//   }
-// };
-
-// export const blockUser = async(req,res) =>{
-//     try {
-//         const user = await User.findById(req.params.id);
-//         if (!user) {
-//             return res.status(404).json({ message: "User Not found",})
-//         }
-//         user.isBlocked = true;
-//         await user.save();
-//         res.status(200).json({ success: true, message: "User blocked",});
-//     } catch (error) {
-//          res.status(500).json({ message: error.message,});
-//     }
-// }
-
-// export const UnblockUser = async(req,res) =>{
-//     try {
-//         const user = await User.findById(req.params.id);
-//         if (!user) {
-//             return res.status(404).json({ message: "User Not found",})
-//         }
-//         user.isBlocked = true;
-//         await user.save();
-//         res.status(200).json({ success: true, message: "User Unblocked",});
-//     } catch (error) {
-//          res.status(500).json({ message: error.message,});
-//     }
-// }
 import { User } from "../models/user.model.js";
 
 import bcrypt from "bcryptjs";
@@ -118,7 +14,7 @@ export const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // CHECK USER
+    // CHECK EXISTING USER
     const existingUser = await User.findOne({
       email,
     });
@@ -126,7 +22,6 @@ export const registerUser = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-
         message: "User Already Exists",
       });
     }
@@ -139,18 +34,19 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role: role || "USER"
+      role: role || "USER",
     });
 
     res.status(201).json({
       success: true,
-
       message: "Register Success",
-
       user,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
+      success: false,
       message: error.message || "Internal Server Error",
     });
   }
@@ -178,16 +74,13 @@ export const loginUser = async (req, res) => {
 
         {
           expiresIn: "7d",
-        },
+        }
       );
 
       return res.status(200).json({
         success: true,
-
         role: "admin",
-
         token,
-
         message: "Admin Login Success",
       });
     }
@@ -203,7 +96,6 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-
         message: "User Not Found",
       });
     }
@@ -211,14 +103,12 @@ export const loginUser = async (req, res) => {
     // CHECK PASSWORD
     const isMatch = await bcrypt.compare(
       password,
-
-      user.password,
+      user.password
     );
 
     if (!isMatch) {
       return res.status(400).json({
         success: false,
-
         message: "Invalid Password",
       });
     }
@@ -227,7 +117,6 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         userId: user._id,
-
         role: "user",
       },
 
@@ -235,22 +124,21 @@ export const loginUser = async (req, res) => {
 
       {
         expiresIn: "7d",
-      },
+      }
     );
 
     res.status(200).json({
       success: true,
-
       role: "user",
-
       token,
-
       user,
-
       message: "Login Success",
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
+      success: false,
       message: error.message || "Internal Server Error",
     });
   }
@@ -262,15 +150,17 @@ export const loginUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().select("-password");
 
     res.status(200).json({
       success: true,
-
       users,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
+      success: false,
       message: error.message || "Internal Server Error",
     });
   }
@@ -282,34 +172,63 @@ export const getUsers = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+    if (!deletedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
 
     res.status(200).json({
       success: true,
-
-      message: "User Deleted",
+      message: "User Deleted Successfully",
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
+      success: false,
       message: error.message || "Internal Server Error",
     });
   }
 };
+
 // ============================
 // GET PROFILE
 // ============================
 
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.userId);
+    // CHECK USER ID
+    if (!req.userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    // FIND USER
+    const user = await User.findById(req.userId).select("-password");
+
+    // USER NOT FOUND
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
 
     res.status(200).json({
       success: true,
-
       user,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
+      success: false,
       message: error.message || "Internal Server Error",
     });
   }
@@ -321,137 +240,135 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
+    // CHECK USER ID
+    if (!req.userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     const {
       name,
-
       email,
-
       phone,
-
       gender,
-
       dob,
-
       address,
-
       profession,
     } = req.body;
 
+    // UPDATE DATA
     const updateData = {
       name,
-
       email,
-
       phone,
-
       gender,
-
       dob,
-
       address,
-
       profession,
     };
 
-    // IMAGE
+    // IMAGE UPLOAD
     if (req.file) {
       updateData.profileImage = req.file.filename;
     }
 
+    // UPDATE USER
     const updatedUser = await User.findByIdAndUpdate(
       req.userId,
-
       updateData,
-
       {
         new: true,
-      },
-    );
+      }
+    ).select("-password");
+
+    // USER NOT FOUND
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
 
     res.status(200).json({
       success: true,
-
-      message: "Profile Updated",
-
+      message: "Profile Updated Successfully",
       user: updatedUser,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
+      success: false,
       message: error.message || "Internal Server Error",
     });
   }
 };
+
 // ============================
 // CHANGE PASSWORD
 // ============================
 
-export const changePassword =
-  async (req, res) => {
+export const changePassword = async (req, res) => {
+  try {
+    const {
+      currentPassword,
+      newPassword,
+    } = req.body;
 
-    try {
-
-      const {
-
-        currentPassword,
-
-        newPassword,
-
-      } = req.body;
-
-      // FIND USER
-      const user =
-        await User.findById(
-          req.userId
-        );
-
-      // CHECK PASSWORD
-      const isMatch =
-        await bcrypt.compare(
-
-          currentPassword,
-
-          user.password
-        );
-
-      if (!isMatch) {
-
-        return res.status(400).json({
-
-          success: false,
-
-          message:
-            "Current Password Incorrect",
-        });
-      }
-
-      // HASH NEW PASSWORD
-      const hashedPassword =
-        await bcrypt.hash(
-          newPassword,
-          10
-        );
-
-      // UPDATE PASSWORD
-      user.password =
-        hashedPassword;
-
-      await user.save();
-
-      res.status(200).json({
-
-        success: true,
-
-        message:
-          "Password Updated Successfully",
-      });
-
-    } catch (error) {
-
-      res.status(500).json({
-
-        message:
-          error.message ||
-          "Internal Server Error",
+    // CHECK USER ID
+    if (!req.userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
       });
     }
-  };
+
+    // FIND USER
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+
+    // CHECK CURRENT PASSWORD
+    const isMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        message: "Current Password Incorrect",
+      });
+    }
+
+    // HASH NEW PASSWORD
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      10
+    );
+
+    // UPDATE PASSWORD
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password Updated Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};

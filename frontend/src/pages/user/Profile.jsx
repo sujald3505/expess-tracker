@@ -120,7 +120,7 @@ const Profile = () => {
           <div className="flex items-center gap-6 mb-10">
             <img
               src={
-                user.profileImage
+                user?.profileImage
                   ? `http://localhost:8080/uploads/${user.profileImage}`
                   : "https://i.pravatar.cc/150"
               }
@@ -129,9 +129,9 @@ const Profile = () => {
             />
 
             <div>
-              <h2 className="text-3xl font-bold text-gray-800">{user.name}</h2>
+              <h2 className="text-3xl font-bold text-gray-800">{user?.name}</h2>
 
-              <p className="text-gray-500 mt-1">{user.email}</p>
+              <p className="text-gray-500 mt-1">{user?.email}</p>
             </div>
           </div>
 
@@ -147,7 +147,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="name"
-                value={user.name}
+                value={user?.name}
                 onChange={handleChange}
                 className="w-full h-[55px] border rounded-xl px-4"
               />
@@ -160,7 +160,7 @@ const Profile = () => {
               <input
                 type="email"
                 name="email"
-                value={user.email}
+                value={user?.email}
                 onChange={handleChange}
                 className="w-full h-[55px] border rounded-xl px-4"
               />
@@ -173,7 +173,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="phone"
-                value={user.phone}
+                value={user?.phone}
                 onChange={handleChange}
                 className="w-full h-[55px] border rounded-xl px-4"
               />
@@ -185,7 +185,7 @@ const Profile = () => {
 
               <select
                 name="gender"
-                value={user.gender}
+                value={user?.gender}
                 onChange={handleChange}
                 className="w-full h-[55px] border rounded-xl px-4"
               >
@@ -204,7 +204,7 @@ const Profile = () => {
               <input
                 type="date"
                 name="dob"
-                value={user.dob}
+                value={user?.dob}
                 onChange={handleChange}
                 className="w-full h-[55px] border rounded-xl px-4"
               />
@@ -217,7 +217,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="profession"
-                value={user.profession}
+                value={user?.profession}
                 onChange={handleChange}
                 className="w-full h-[55px] border rounded-xl px-4"
               />
@@ -229,7 +229,7 @@ const Profile = () => {
 
               <textarea
                 name="address"
-                value={user.address}
+                value={user?.address}
                 onChange={handleChange}
                 rows="4"
                 className="w-full border rounded-xl px-4 py-3"

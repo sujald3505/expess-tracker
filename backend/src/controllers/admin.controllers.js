@@ -2,9 +2,7 @@ import { User } from "../models/user.model.js";
 
 import { Transaction } from "../models/transaction.model.js";
 
-// ============================
-// ADMIN DASHBOARD
-// ============================
+
 
 export const getAdminDashboard =
   async (req, res) => {

@@ -1,56 +1,54 @@
-// import { Router } from "express";
-// import { deleteTransactions, getTransactions } from "../controllers/transaction.controller.js";
-
-// const transactionRoute = Router();
-
-// transactionRoute.get("/",getTransactions)
-// transactionRoute.delete("/:id",deleteTransactions)
-
-
-// export default transactionRoute;
-
 
 import { Router } from "express";
 
 import {
-
   getTransactions,
-
   createTransaction,
-
   deleteTransactions,
-
+  getAllTransactions,
 } from "../controllers/transaction.controller.js";
 
 import { authenticate } from "../middleware/authenticate.js";
 
-const transactionRoute =
-  Router();
+const transactionRoute = Router();
 
-// GET ALL
+// ============================
+// GET USER TRANSACTIONS
+// ============================
+
 transactionRoute.get(
   "/",
-
   authenticate,
-
   getTransactions
 );
 
-// CREATE
+// ============================
+// GET ALL TRANSACTIONS (ADMIN)
+// ============================
+
+transactionRoute.get(
+  "/all",
+  authenticate,
+  getAllTransactions
+);
+
+// ============================
+// CREATE TRANSACTION
+// ============================
+
 transactionRoute.post(
   "/",
-
   authenticate,
-
   createTransaction
 );
 
-// DELETE
+// ============================
+// DELETE TRANSACTION
+// ============================
+
 transactionRoute.delete(
   "/:id",
-
   authenticate,
-
   deleteTransactions
 );
 
