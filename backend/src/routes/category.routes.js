@@ -1,5 +1,5 @@
 
-// export default categoryRoute;
+
 import { Router } from "express";
 
 import {

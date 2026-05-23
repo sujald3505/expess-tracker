@@ -1,4 +1,163 @@
 
+// import { Transaction } from "../models/transaction.model.js";
+
+// // ============================
+// // CREATE TRANSACTION
+// // ============================
+
+// export const createTransaction =
+//   async (req, res) => {
+//     try {
+//       const {
+//         title,
+//         amount,
+//         type,
+//         category,
+//         date,
+//       } = req.body;
+
+//       const transaction =
+//         await Transaction.create({
+//           title,
+//           amount,
+//           type,
+//           category,
+//           date,
+
+//           // SAVE USER ID
+//           user: req.userId,
+//         });
+
+//       res.status(201).json({
+//         success: true,
+//         message:
+//           "Transaction Added Successfully",
+//         transaction,
+//       });
+//     } catch (error) {
+//       console.log(error);
+
+//       res.status(500).json({
+//         success: false,
+//         message:
+//           error.message ||
+//           "Internal Server Error",
+//       });
+//     }
+//   };
+
+// // ============================
+// // GET USER TRANSACTIONS
+// // ============================
+
+// export const getTransactions =
+//   async (req, res) => {
+//     try {
+//       const transactions =
+//         await Transaction.find({
+//           user: req.userId,
+//         })
+
+//           .populate(
+//             "user",
+//             "name email"
+//           )
+
+//           .sort({
+//             createdAt: -1,
+//           });
+
+//       res.status(200).json({
+//         success: true,
+//         transactions,
+//       });
+//     } catch (error) {
+//       console.log(error);
+
+//       res.status(500).json({
+//         success: false,
+//         message:
+//           error.message ||
+//           "Internal Server Error",
+//       });
+//     }
+//   };
+
+// // ============================
+// // GET ALL TRANSACTIONS (ADMIN)
+// // ============================
+
+// export const getAllTransactions =
+//   async (req, res) => {
+//     try {
+//       const transactions =
+//         await Transaction.find()
+
+//           .populate(
+//             "user",
+//             "name email profileImage"
+//           )
+
+//           .sort({
+//             createdAt: -1,
+//           });
+
+//       res.status(200).json({
+//         success: true,
+//         transactions,
+//       });
+//     } catch (error) {
+//       console.log(error);
+
+//       res.status(500).json({
+//         success: false,
+//         message:
+//           error.message ||
+//           "Internal Server Error",
+//       });
+//     }
+//   };
+
+// // ============================
+// // DELETE TRANSACTION
+// // ============================
+
+// export const deleteTransactions =
+//   async (req, res) => {
+//     try {
+//       const transaction =
+//         await Transaction.findById(
+//           req.params.id
+//         );
+
+//       if (!transaction) {
+//         return res.status(404).json({
+//           success: false,
+//           message:
+//             "Transaction Not Found",
+//         });
+//       }
+
+//       await transaction.deleteOne();
+
+//       res.status(200).json({
+//         success: true,
+//         message:
+//           "Transaction Deleted Successfully",
+//       });
+//     } catch (error) {
+//       console.log(error);
+
+//       res.status(500).json({
+//         success: false,
+//         message:
+//           error.message ||
+//           "Internal Server Error",
+//       });
+//     }
+//   };
+
+
 import { Transaction } from "../models/transaction.model.js";
 
 // ============================
@@ -7,7 +166,9 @@ import { Transaction } from "../models/transaction.model.js";
 
 export const createTransaction =
   async (req, res) => {
+
     try {
+
       const {
         title,
         amount,
@@ -30,15 +191,20 @@ export const createTransaction =
 
       res.status(201).json({
         success: true,
+
         message:
           "Transaction Added Successfully",
+
         transaction,
       });
+
     } catch (error) {
+
       console.log(error);
 
       res.status(500).json({
         success: false,
+
         message:
           error.message ||
           "Internal Server Error",
@@ -52,11 +218,52 @@ export const createTransaction =
 
 export const getTransactions =
   async (req, res) => {
+
     try {
+
+      const {
+        search,
+        type,
+        category,
+      } = req.query;
+
+      // FILTER OBJECT
+      let filter = {
+        user: req.userId,
+      };
+
+      // SEARCH FILTER
+      if (search) {
+
+        filter.title = {
+          $regex: search,
+          $options: "i",
+        };
+      }
+
+      // TYPE FILTER
+      if (
+        type &&
+        type !== "all"
+      ) {
+
+        filter.type = type;
+      }
+
+      // CATEGORY FILTER
+      if (
+        category &&
+        category !== "all"
+      ) {
+
+        filter.category =
+          category;
+      }
+
       const transactions =
-        await Transaction.find({
-          user: req.userId,
-        })
+        await Transaction.find(
+          filter
+        )
 
           .populate(
             "user",
@@ -69,13 +276,17 @@ export const getTransactions =
 
       res.status(200).json({
         success: true,
+
         transactions,
       });
+
     } catch (error) {
+
       console.log(error);
 
       res.status(500).json({
         success: false,
+
         message:
           error.message ||
           "Internal Server Error",
@@ -89,7 +300,9 @@ export const getTransactions =
 
 export const getAllTransactions =
   async (req, res) => {
+
     try {
+
       const transactions =
         await Transaction.find()
 
@@ -104,13 +317,17 @@ export const getAllTransactions =
 
       res.status(200).json({
         success: true,
+
         transactions,
       });
+
     } catch (error) {
+
       console.log(error);
 
       res.status(500).json({
         success: false,
+
         message:
           error.message ||
           "Internal Server Error",
@@ -124,15 +341,19 @@ export const getAllTransactions =
 
 export const deleteTransactions =
   async (req, res) => {
+
     try {
+
       const transaction =
         await Transaction.findById(
           req.params.id
         );
 
       if (!transaction) {
+
         return res.status(404).json({
           success: false,
+
           message:
             "Transaction Not Found",
         });
@@ -142,14 +363,18 @@ export const deleteTransactions =
 
       res.status(200).json({
         success: true,
+
         message:
           "Transaction Deleted Successfully",
       });
+
     } catch (error) {
+
       console.log(error);
 
       res.status(500).json({
         success: false,
+
         message:
           error.message ||
           "Internal Server Error",
