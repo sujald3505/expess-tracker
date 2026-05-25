@@ -112,6 +112,7 @@ import Profile from "./pages/user/Profile";
 
 import Settings from "./pages/user/Settings";
 import AdminRoute from "./routes/AdminRoute";
+import Budget from "./pages/user/Budget";
 
 const App = () => {
   return (
@@ -153,6 +154,8 @@ const App = () => {
             <Route path="/user/transaction" element={<UserTransaction />} />
 
             <Route path="/user/report" element={<UserReport />} />
+
+            <Route path="/user/budget" element={<Budget />}/>
 
             <Route path="/user/profile" element={<Profile />} />
 

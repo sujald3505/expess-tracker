@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 
 import {
@@ -6,6 +5,7 @@ import {
   createTransaction,
   deleteTransactions,
   getAllTransactions,
+  downloadTransactionPDF,
 } from "../controllers/transaction.controller.js";
 
 import { authenticate } from "../middleware/authenticate.js";
@@ -16,40 +16,30 @@ const transactionRoute = Router();
 // GET USER TRANSACTIONS
 // ============================
 
-transactionRoute.get(
-  "/",
-  authenticate,
-  getTransactions
-);
+transactionRoute.get("/", authenticate, getTransactions);
 
 // ============================
 // GET ALL TRANSACTIONS (ADMIN)
 // ============================
 
-transactionRoute.get(
-  "/all",
-  authenticate,
-  getAllTransactions
-);
+transactionRoute.get("/all", authenticate, getAllTransactions);
 
 // ============================
 // CREATE TRANSACTION
 // ============================
 
-transactionRoute.post(
-  "/",
-  authenticate,
-  createTransaction
-);
+transactionRoute.post("/", authenticate, createTransaction);
 
 // ============================
 // DELETE TRANSACTION
 // ============================
 
-transactionRoute.delete(
-  "/:id",
+transactionRoute.delete("/:id", authenticate, deleteTransactions);
+
+transactionRoute.get(
+  "/download/pdf",
   authenticate,
-  deleteTransactions
+  downloadTransactionPDF
 );
 
 export default transactionRoute;

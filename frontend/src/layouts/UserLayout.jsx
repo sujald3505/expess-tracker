@@ -27,6 +27,7 @@ const UserLayout = ({ children }) => {
     { name: "➕ Add Transaction", path: "/user/addtransaction" },
     { name: "💰 Transactions", path: "/user/transaction" },
     { name: "📊 Reports", path: "/user/report" },
+    {name:  "💵 Budget", path:"/user/budget"},
     { name: "👤 Profile", path: "/user/profile" },
     { name: "⚙️ Settings", path: "/user/setting" },
   ];

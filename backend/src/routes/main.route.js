@@ -5,6 +5,7 @@ import categoryRoutes from "./category.routes.js";
 import reportRoutes from "./report.routes.js";
 import settingRoute from "./setting.route.js";
 import adminRoute from "./admin.routes.js";
+import budgetRoute from "./budget.route.js";
 
 export const route = Router();
 
@@ -16,3 +17,4 @@ route.use("/category",categoryRoutes)
 route.use("/report",reportRoutes)
 route.use("/setting",settingRoute)
 route.use("/admin",adminRoute)
+route.use("/budget",budgetRoute)
