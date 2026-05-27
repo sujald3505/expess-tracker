@@ -9,7 +9,10 @@ const Settings = () => {
 
   const [newPassword, setNewPassword] = useState("");
 
+  // ============================
   // CHANGE PASSWORD
+  // ============================
+
   const handleChangePassword = async (e) => {
     e.preventDefault();
 
@@ -29,18 +32,16 @@ const Settings = () => {
 
           body: JSON.stringify({
             currentPassword,
-
             newPassword,
           }),
         },
       );
 
-      const data = await response.json();
+      await response.json();
 
-      toast.success("Settings Updated Successfully");
+      toast.success("Password Updated Successfully");
 
       setCurrentPassword("");
-
       setNewPassword("");
     } catch (error) {
       console.log(error);
@@ -49,22 +50,100 @@ const Settings = () => {
 
   return (
     <UserLayout>
-      <div className="w-full min-h-screen bg-gray-100 p-6">
-        {/* HEADER */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800">Settings</h1>
+      {/* ================= MAIN CONTAINER ================= */}
 
-          <p className="text-gray-500 mt-2">Manage your account settings</p>
+      <div
+        className="
+        w-full
+        min-h-screen
+        bg-gray-100
+        p-4
+        sm:p-6
+      "
+      >
+        {/* ================= HEADER ================= */}
+
+        <div className="mb-6 md:mb-8">
+          <h1
+            className="
+            text-2xl
+            sm:text-3xl
+            lg:text-4xl
+            font-bold
+            text-gray-800
+          "
+          >
+            Settings
+          </h1>
+
+          <p
+            className="
+            text-sm
+            sm:text-base
+            text-gray-500
+            mt-2
+          "
+          >
+            Manage your account settings
+          </p>
         </div>
 
-        {/* CARD */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-3xl">
-          <h2 className="text-2xl font-bold mb-6">Change Password</h2>
+        {/* ================= SETTINGS CARD ================= */}
+
+        <div
+          className="
+          w-full
+          max-w-3xl
+          bg-white
+          rounded-2xl
+          shadow-lg
+          p-4
+          sm:p-6
+          lg:p-8
+        "
+        >
+          {/* CARD HEADER */}
+
+          <div className="mb-6">
+            <h2
+              className="
+              text-xl
+              sm:text-2xl
+              font-bold
+              text-gray-800
+            "
+            >
+              Change Password
+            </h2>
+
+            <p
+              className="
+              text-sm
+              sm:text-base
+              text-gray-500
+              mt-2
+            "
+            >
+              Update your account password securely
+            </p>
+          </div>
+
+          {/* FORM */}
 
           <form onSubmit={handleChangePassword} className="space-y-5">
             {/* CURRENT PASSWORD */}
+
             <div>
-              <label className="block mb-2 font-semibold">
+              <label
+                className="
+                block
+                mb-2
+                font-semibold
+                text-sm
+                sm:text-base
+                text-gray-700
+              "
+              >
                 Current Password
               </label>
 
@@ -72,26 +151,79 @@ const Settings = () => {
                 type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full h-[55px] border rounded-xl px-4"
+                placeholder="Enter current password"
+                className="
+                w-full
+                h-[50px]
+                sm:h-[55px]
+                border
+                border-gray-300
+                rounded-xl
+                px-4
+                outline-none
+                focus:border-black
+                text-sm
+                sm:text-base
+              "
+                required
               />
             </div>
 
             {/* NEW PASSWORD */}
+
             <div>
-              <label className="block mb-2 font-semibold">New Password</label>
+              <label
+                className="
+                block
+                mb-2
+                font-semibold
+                text-sm
+                sm:text-base
+                text-gray-700
+              "
+              >
+                New Password
+              </label>
 
               <input
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full h-[55px] border rounded-xl px-4"
+                placeholder="Enter new password"
+                className="
+                w-full
+                h-[50px]
+                sm:h-[55px]
+                border
+                border-gray-300
+                rounded-xl
+                px-4
+                outline-none
+                focus:border-black
+                text-sm
+                sm:text-base
+              "
+                required
               />
             </div>
 
             {/* BUTTON */}
+
             <button
               type="submit"
-              className="w-full h-[55px] bg-black hover:bg-gray-800 text-white rounded-xl text-lg font-semibold transition"
+              className="
+              w-full
+              h-[50px]
+              sm:h-[55px]
+              bg-black
+              hover:bg-gray-800
+              text-white
+              rounded-xl
+              text-sm
+              sm:text-lg
+              font-semibold
+              transition
+            "
             >
               Update Password
             </button>

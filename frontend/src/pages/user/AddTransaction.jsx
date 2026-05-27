@@ -1,8 +1,11 @@
-// import React, { useState } from "react";
+// import React, { useEffect, useState } from "react";
+// import { toast } from "react-toastify";
 
 // import UserLayout from "../../layouts/UserLayout";
 
 // const AddTransaction = () => {
+//   const [categories, setCategories] = useState([]);
+
 //   const [formData, setFormData] = useState({
 //     title: "",
 //     amount: "",
@@ -11,7 +14,28 @@
 //     date: "",
 //   });
 
+//   // ============================
+//   // GET CATEGORIES
+//   // ============================
+
+//   const getCategories = async () => {
+//     try {
+//       const response = await fetch("http://localhost:8080/api/category");
+
+//       const data = await response.json();
+
+//       console.log(data);
+
+//       setCategories(data.categories);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+
+//   // ============================
 //   // HANDLE CHANGE
+//   // ============================
+
 //   const handleChange = (e) => {
 //     setFormData({
 //       ...formData,
@@ -20,7 +44,10 @@
 //     });
 //   };
 
+//   // ============================
 //   // ADD TRANSACTION
+//   // ============================
+
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
@@ -43,7 +70,7 @@
 
 //       console.log(data);
 
-//       alert("Transaction Added Successfully");
+//       toast.success("Transaction Added");
 
 //       // RESET FORM
 //       setFormData({
@@ -57,6 +84,14 @@
 //       console.log(error);
 //     }
 //   };
+
+//   // ============================
+//   // USE EFFECT
+//   // ============================
+
+//   useEffect(() => {
+//     getCategories();
+//   }, []);
 
 //   return (
 //     <UserLayout>
@@ -129,15 +164,21 @@
 //                 Category
 //               </label>
 
-//               <input
-//                 type="text"
+//               <select
 //                 name="category"
 //                 value={formData.category}
 //                 onChange={handleChange}
-//                 placeholder="Enter category"
 //                 className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
 //                 required
-//               />
+//               >
+//                 <option value="">Select Category</option>
+
+//                 {categories.map((item) => (
+//                   <option key={item._id} value={item.name}>
+//                     {item.name}
+//                   </option>
+//                 ))}
+//               </select>
 //             </div>
 
 //             {/* DATE */}
@@ -171,21 +212,30 @@
 // };
 
 // export default AddTransaction;
-import React, { useEffect, useState } from "react";
+
+
+
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
 import { toast } from "react-toastify";
 
 import UserLayout from "../../layouts/UserLayout";
 
 const AddTransaction = () => {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] =
+    useState([]);
 
-  const [formData, setFormData] = useState({
-    title: "",
-    amount: "",
-    type: "expense",
-    category: "",
-    date: "",
-  });
+  const [formData, setFormData] =
+    useState({
+      title: "",
+      amount: "",
+      type: "expense",
+      category: "",
+      date: "",
+    });
 
   // ============================
   // GET CATEGORIES
@@ -193,11 +243,11 @@ const AddTransaction = () => {
 
   const getCategories = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/category");
+      const response = await fetch(
+        "http://localhost:8080/api/category"
+      );
 
       const data = await response.json();
-
-      console.log(data);
 
       setCategories(data.categories);
     } catch (error) {
@@ -213,7 +263,8 @@ const AddTransaction = () => {
     setFormData({
       ...formData,
 
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
   };
 
@@ -225,25 +276,32 @@ const AddTransaction = () => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:8080/api/transaction", {
-        method: "POST",
+      const response = await fetch(
+        "http://localhost:8080/api/transaction",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
+          headers: {
+            "Content-Type":
+              "application/json",
 
-          Authorization: `Bearer ${token}`,
-        },
+            Authorization: `Bearer ${token}`,
+          },
 
-        body: JSON.stringify(formData),
-      });
+          body: JSON.stringify(
+            formData
+          ),
+        }
+      );
 
-      const data = await response.json();
+      await response.json();
 
-      console.log(data);
-
-      toast.success("Transaction Added");
+      toast.success(
+        "Transaction Added"
+      );
 
       // RESET FORM
       setFormData({
@@ -268,112 +326,232 @@ const AddTransaction = () => {
 
   return (
     <UserLayout>
-      <div className="w-full min-h-screen bg-gray-100 p-6">
-        {/* PAGE TITLE */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800">Add Transaction</h1>
+      <div className="w-full min-h-screen">
 
-          <p className="text-gray-500 mt-2">Add your income and expenses</p>
+        {/* PAGE HEADER */}
+        <div className="mb-6 md:mb-8">
+
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
+            Add Transaction
+          </h1>
+
+          <p className="text-sm md:text-base text-gray-500 mt-2">
+            Add your income and
+            expenses
+          </p>
         </div>
 
-        {/* FORM */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-3xl">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* TITLE */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Title
-              </label>
+        {/* FORM CARD */}
+        <div
+          className="
+          bg-white
+          rounded-2xl
+          shadow-lg
+          p-4
+          sm:p-6
+          md:p-8
+          w-full
+          max-w-4xl
+        "
+        >
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 md:space-y-6"
+          >
 
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="Enter title"
-                className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
-                required
-              />
-            </div>
+            {/* GRID */}
+            <div
+              className="
+              grid
+              grid-cols-1
+              md:grid-cols-2
+              gap-5
+            "
+            >
 
-            {/* AMOUNT */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Amount
-              </label>
+              {/* TITLE */}
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2 text-sm md:text-base">
+                  Title
+                </label>
 
-              <input
-                type="number"
-                name="amount"
-                value={formData.amount}
-                onChange={handleChange}
-                placeholder="Enter amount"
-                className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
-                required
-              />
-            </div>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="Enter title"
+                  className="
+                  w-full
+                  h-[50px]
+                  md:h-[55px]
+                  border
+                  border-gray-300
+                  rounded-xl
+                  px-4
+                  text-sm
+                  md:text-base
+                  outline-none
+                  focus:border-black
+                "
+                  required
+                />
+              </div>
 
-            {/* TYPE */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Type
-              </label>
+              {/* AMOUNT */}
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2 text-sm md:text-base">
+                  Amount
+                </label>
 
-              <select
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-                className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
-              >
-                <option value="income">Income</option>
+                <input
+                  type="number"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleChange}
+                  placeholder="Enter amount"
+                  className="
+                  w-full
+                  h-[50px]
+                  md:h-[55px]
+                  border
+                  border-gray-300
+                  rounded-xl
+                  px-4
+                  text-sm
+                  md:text-base
+                  outline-none
+                  focus:border-black
+                "
+                  required
+                />
+              </div>
 
-                <option value="expense">Expense</option>
-              </select>
-            </div>
+              {/* TYPE */}
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2 text-sm md:text-base">
+                  Type
+                </label>
 
-            {/* CATEGORY */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Category
-              </label>
-
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
-                required
-              >
-                <option value="">Select Category</option>
-
-                {categories.map((item) => (
-                  <option key={item._id} value={item.name}>
-                    {item.name}
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  className="
+                  w-full
+                  h-[50px]
+                  md:h-[55px]
+                  border
+                  border-gray-300
+                  rounded-xl
+                  px-4
+                  text-sm
+                  md:text-base
+                  outline-none
+                  focus:border-black
+                "
+                >
+                  <option value="income">
+                    Income
                   </option>
-                ))}
-              </select>
-            </div>
 
-            {/* DATE */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Date
-              </label>
+                  <option value="expense">
+                    Expense
+                  </option>
+                </select>
+              </div>
 
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                className="w-full h-[55px] border border-gray-300 rounded-xl px-4 outline-none focus:border-black"
-                required
-              />
+              {/* CATEGORY */}
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2 text-sm md:text-base">
+                  Category
+                </label>
+
+                <select
+                  name="category"
+                  value={
+                    formData.category
+                  }
+                  onChange={handleChange}
+                  className="
+                  w-full
+                  h-[50px]
+                  md:h-[55px]
+                  border
+                  border-gray-300
+                  rounded-xl
+                  px-4
+                  text-sm
+                  md:text-base
+                  outline-none
+                  focus:border-black
+                "
+                  required
+                >
+                  <option value="">
+                    Select Category
+                  </option>
+
+                  {categories.map(
+                    (item) => (
+                      <option
+                        key={item._id}
+                        value={
+                          item.name
+                        }
+                      >
+                        {item.name}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+
+              {/* DATE */}
+              <div className="md:col-span-2">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm md:text-base">
+                  Date
+                </label>
+
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  className="
+                  w-full
+                  h-[50px]
+                  md:h-[55px]
+                  border
+                  border-gray-300
+                  rounded-xl
+                  px-4
+                  text-sm
+                  md:text-base
+                  outline-none
+                  focus:border-black
+                "
+                  required
+                />
+              </div>
             </div>
 
             {/* BUTTON */}
             <button
               type="submit"
-              className="w-full h-[55px] bg-black hover:bg-gray-800 text-white rounded-xl text-lg font-semibold transition"
+              className="
+              w-full
+              h-[50px]
+              md:h-[55px]
+              bg-black
+              hover:bg-gray-800
+              text-white
+              rounded-xl
+              text-base
+              md:text-lg
+              font-semibold
+              transition
+            "
             >
               Add Transaction
             </button>
