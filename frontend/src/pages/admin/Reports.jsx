@@ -140,7 +140,7 @@ const Reports = () => {
                         sm:text-2xl
                         font-bold
                         text-gray-800
-                        break-words
+                        wrap-break-words
                       "
                     >
                       {user.name}
@@ -164,9 +164,9 @@ const Reports = () => {
                   <div
                     className="
                       w-full
-                      h-[260px]
-                      sm:h-[320px]
-                      lg:h-[350px]
+                      h-65
+                      sm:h-80
+                      lg:h-87.5
                     "
                   >
                     <ResponsiveContainer width="100%" height="100%">

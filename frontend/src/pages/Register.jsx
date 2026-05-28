@@ -70,10 +70,10 @@ const Register = () => {
   return (
     <div className="min-h-screen bg-[#edf2ff] overflow-hidden relative flex items-center justify-center px-4 py-10">
       {/* TOP LEFT CIRCLE */}
-      <div className="absolute top-[-120px] left-[-120px] w-[280px] sm:w-[320px] h-[280px] sm:h-[320px] bg-pink-200 rounded-full opacity-50"></div>
+      <div className="absolute top-30 left-30 w-70 sm:w-[320px] h-70 sm:h-80 bg-pink-200 rounded-full opacity-50"></div>
 
       {/* BOTTOM RIGHT CIRCLE */}
-      <div className="absolute bottom-[-150px] right-[-150px] w-[320px] sm:w-[380px] h-[320px] sm:h-[380px] bg-blue-200 rounded-full opacity-40"></div>
+      <div className="absolute bottom-37.5 right-37.5 w-[320px] sm:w-95 h-80 sm:h-95 bg-blue-200 rounded-full opacity-40"></div>
 
       {/* MAIN CONTAINER */}
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 items-center gap-10 relative z-10">
@@ -102,7 +102,7 @@ const Register = () => {
               </label>
 
               <div className="flex items-center border-b border-gray-400 pb-3">
-                <User size={20} className="text-gray-500 mr-4 flex-shrink-0" />
+                <User size={20} className="text-gray-500 mr-4 shrink-0" />
 
                 <input
                   type="text"
@@ -122,7 +122,7 @@ const Register = () => {
               </label>
 
               <div className="flex items-center border-b border-gray-400 pb-3">
-                <Mail size={20} className="text-gray-500 mr-4 flex-shrink-0" />
+                <Mail size={20} className="text-gray-500 mr-4 shrink-0" />
 
                 <input
                   type="email"
@@ -142,7 +142,7 @@ const Register = () => {
               </label>
 
               <div className="flex items-center border-b border-gray-400 pb-3">
-                <Lock size={20} className="text-gray-500 mr-4 flex-shrink-0" />
+                <Lock size={20} className="text-gray-500 mr-4 shrink-0" />
 
                 <input
                   type="password"
@@ -162,7 +162,7 @@ const Register = () => {
               </label>
 
               <div className="flex items-center border-b border-gray-400 pb-3">
-                <Lock size={20} className="text-gray-500 mr-4 flex-shrink-0" />
+                <Lock size={20} className="text-gray-500 mr-4 shrink-0" />
 
                 <input
                   type="password"

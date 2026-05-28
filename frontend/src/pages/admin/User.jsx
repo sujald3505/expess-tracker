@@ -587,7 +587,7 @@ const Users = () => {
                     w-16
                     h-16
                     rounded-2xl
-                    bg-gradient-to-r
+                    bg-linear-to-r
                     from-blue-500
                     to-purple-500
                     flex
@@ -650,7 +650,7 @@ const Users = () => {
                   className="
                   mt-5
                   w-full
-                  h-[50px]
+                  h-12.5
                   bg-red-500
                   hover:bg-red-600
                   text-white
@@ -715,7 +715,7 @@ const Users = () => {
                     w-16
                     h-16
                     rounded-2xl
-                    bg-gradient-to-r
+                    bg-linear-to-r
                     from-blue-500
                     to-purple-500
                     flex

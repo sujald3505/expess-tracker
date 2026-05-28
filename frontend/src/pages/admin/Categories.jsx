@@ -159,7 +159,7 @@ const Categories = () => {
             border
             border-gray-300
             w-full
-            h-[50px]
+            h-12.5
             px-4
             rounded-xl
             outline-none
@@ -176,13 +176,13 @@ const Categories = () => {
             bg-black
             hover:bg-gray-800
             text-white
-            h-[50px]
-            sm:w-[150px]
+            h-12.5
+            sm:w-37.5
             w-full
             rounded-xl
             font-semibold
             transition
-            flex-shrink-0
+            shrink-0
           "
           >
             Add Category
@@ -221,7 +221,7 @@ const Categories = () => {
                         text-lg
                         font-semibold
                         text-gray-800
-                        break-words
+                        wrap-break-words
                       "
                     >
                       {category.name}
@@ -242,7 +242,7 @@ const Categories = () => {
                       text-sm
                       font-medium
                       transition
-                      flex-shrink-0
+                      shrink-0
                     "
                   >
                     Delete

@@ -519,8 +519,8 @@ const Budget = () => {
               required
               className="
               w-full
-              h-[50px]
-              md:h-[55px]
+              h-12.5
+              md:h-13.75
               border
               border-gray-300
               rounded-xl
@@ -562,8 +562,8 @@ const Budget = () => {
               required
               className="
               w-full
-              h-[50px]
-              md:h-[55px]
+              h-12.5
+              md:h-13.75
               border
               border-gray-300
               rounded-xl
@@ -580,8 +580,8 @@ const Budget = () => {
               type="submit"
               className="
               w-full
-              h-[50px]
-              md:h-[55px]
+              h-12.5
+              md:h-13.75
               bg-black
               hover:bg-gray-800
               text-white
@@ -651,7 +651,7 @@ const Budget = () => {
                           md:text-2xl
                           font-bold
                           text-gray-800
-                          break-words
+                          wrap-break-words
                         "
                         >
                           {

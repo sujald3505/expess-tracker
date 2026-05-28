@@ -198,8 +198,8 @@ const Settings = () => {
                 placeholder="Enter current password"
                 className="
                 w-full
-                h-[50px]
-                sm:h-[55px]
+                h-12.5
+                sm:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -246,8 +246,8 @@ const Settings = () => {
                 placeholder="Enter new password"
                 className="
                 w-full
-                h-[50px]
-                sm:h-[55px]
+                h-12.5
+                sm:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -268,8 +268,8 @@ const Settings = () => {
               type="submit"
               className="
               w-full
-              h-[50px]
-              sm:h-[55px]
+              h-12.5
+              sm:h-13.75
               bg-black
               hover:bg-gray-800
               text-white

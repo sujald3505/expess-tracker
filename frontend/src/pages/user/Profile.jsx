@@ -206,7 +206,7 @@ const Profile = () => {
                 sm:text-3xl
                 font-bold
                 text-gray-800
-                break-words
+                wrap-break-words
               "
               >
                 {user?.name}
@@ -259,8 +259,8 @@ const Profile = () => {
                 onChange={handleChange}
                 className="
                 w-full
-                h-[50px]
-                md:h-[55px]
+                h-12.5
+                md:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -294,8 +294,8 @@ const Profile = () => {
                 onChange={handleChange}
                 className="
                 w-full
-                h-[50px]
-                md:h-[55px]
+                h-12.5
+                md:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -329,8 +329,8 @@ const Profile = () => {
                 onChange={handleChange}
                 className="
                 w-full
-                h-[50px]
-                md:h-[55px]
+                h-12.5
+                md:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -363,8 +363,8 @@ const Profile = () => {
                 onChange={handleChange}
                 className="
                 w-full
-                h-[50px]
-                md:h-[55px]
+                h-12.5
+                md:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -404,8 +404,8 @@ const Profile = () => {
                 onChange={handleChange}
                 className="
                 w-full
-                h-[50px]
-                md:h-[55px]
+                h-12.5
+                md:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -439,8 +439,8 @@ const Profile = () => {
                 onChange={handleChange}
                 className="
                 w-full
-                h-[50px]
-                md:h-[55px]
+                h-12.5
+                md:h-13.75
                 border
                 border-gray-300
                 rounded-xl
@@ -526,8 +526,8 @@ const Profile = () => {
                 type="submit"
                 className="
                 w-full
-                h-[50px]
-                md:h-[55px]
+                h-12.5
+                md:h-13.75
                 bg-black
                 hover:bg-gray-800
                 text-white

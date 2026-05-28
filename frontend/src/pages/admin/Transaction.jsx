@@ -149,7 +149,7 @@ const Transactions = () => {
                     h-12
                     rounded-full
                     object-cover
-                    flex-shrink-0
+                    shrink-0
                   "
                 />
 
@@ -239,7 +239,7 @@ const Transactions = () => {
                 className="
                   w-full
                   mt-5
-                  h-[45px]
+                  h-11.25
                   bg-red-500
                   hover:bg-red-600
                   text-white
@@ -281,7 +281,7 @@ const Transactions = () => {
       "
       >
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[1100px]">
+          <table className="w-full min-w-275">
             {/* TABLE HEADER */}
 
             <thead className="bg-black text-white">

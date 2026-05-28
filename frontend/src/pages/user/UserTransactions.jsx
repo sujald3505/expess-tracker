@@ -505,7 +505,7 @@ const Transactions = () => {
               className="
               w-full
               sm:w-auto
-              h-[50px]
+              h-12.5
               px-6
               bg-blue-600
               hover:bg-blue-700
@@ -520,7 +520,7 @@ const Transactions = () => {
 
             <div
               className="
-              h-[50px]
+              h-12.5
               px-6
               bg-black
               text-white
@@ -566,7 +566,7 @@ const Transactions = () => {
               onChange={(e) => setSearch(e.target.value)}
               className="
               w-full
-              h-[50px]
+              h-12.5
               border
               border-gray-300
               rounded-xl
@@ -584,7 +584,7 @@ const Transactions = () => {
               onChange={(e) => setType(e.target.value)}
               className="
               w-full
-              h-[50px]
+              h-12.5
               border
               border-gray-300
               rounded-xl
@@ -608,7 +608,7 @@ const Transactions = () => {
               onChange={(e) => setCategory(e.target.value)}
               className="
               w-full
-              h-[50px]
+              h-12.5
               border
               border-gray-300
               rounded-xl
@@ -634,7 +634,7 @@ const Transactions = () => {
               onChange={(e) => setPeriod(e.target.value)}
               className="
               w-full
-              h-[50px]
+              h-12.5
               border
               border-gray-300
               rounded-xl
@@ -674,7 +674,7 @@ const Transactions = () => {
                 {/* TOP */}
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-800 break-words">
+                    <h2 className="text-lg font-semibold text-gray-800 wrap-break-words">
                       {transaction.title}
                     </h2>
 
@@ -718,7 +718,7 @@ const Transactions = () => {
                   onClick={() => deleteTransaction(transaction._id)}
                   className="
                     w-full
-                    h-[45px]
+                    h-11.25
                     bg-red-500
                     hover:bg-red-600
                     text-white

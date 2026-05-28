@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import AdminLayout from "../../layouts/AdminLayout";
 
 const Settings = () => {
-
   // ============================
   // PROFILE STATES
   // ============================
@@ -20,61 +19,38 @@ const Settings = () => {
   // PASSWORD STATES
   // ============================
 
-  const [
-    currentPassword,
-    setCurrentPassword,
-  ] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
 
-  const [
-    newPassword,
-    setNewPassword,
-  ] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
-  const [
-    confirmPassword,
-    setConfirmPassword,
-  ] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // ============================
   // GET ADMIN PROFILE
   // ============================
 
   const getProfile = async () => {
-
     try {
+      const token = localStorage.getItem("token");
 
-      const token =
-        localStorage.getItem(
-          "token"
-        );
+      const response = await fetch("http://localhost:8080/api/user/profile", {
+        method: "GET",
 
-      const response =
-        await fetch(
-          "http://localhost:8080/api/user/profile",
-          {
-            method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-            },
-          }
-        );
-
-      const data =
-        await response.json();
+      const data = await response.json();
 
       if (response.ok) {
-
         setName(data.user?.name || "");
 
         setEmail(data.user?.email || "");
 
         setPhone(data.user?.phone || "");
       }
-
     } catch (error) {
-
       console.log(error);
     }
   };
@@ -83,165 +59,110 @@ const Settings = () => {
   // UPDATE PROFILE
   // ============================
 
-  const handleUpdateProfile =
-    async (e) => {
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
 
-      e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
 
-      try {
+      const response = await fetch("http://localhost:8080/api/user/profile", {
+        method: "PUT",
 
-        const token =
-          localStorage.getItem(
-            "token"
-          );
+        headers: {
+          "Content-Type": "application/json",
 
-        const response =
-          await fetch(
-            "http://localhost:8080/api/user/profile",
-            {
-              method: "PUT",
+          Authorization: `Bearer ${token}`,
+        },
 
-              headers: {
-                "Content-Type":
-                  "application/json",
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+        }),
+      });
 
-                Authorization:
-                  `Bearer ${token}`,
-              },
+      const data = await response.json();
 
-              body: JSON.stringify({
-                name,
-                email,
-                phone,
-              }),
-            }
-          );
-
-        const data =
-          await response.json();
-
-        if (!response.ok) {
-
-          return toast.error(
-            data.message ||
-            "Profile Update Failed"
-          );
-        }
-
-        toast.success(
-          data.message ||
-          "Profile Updated Successfully"
-        );
-
-      } catch (error) {
-
-        console.log(error);
-
-        toast.error(
-          "Something went wrong"
-        );
+      if (!response.ok) {
+        return toast.error(data.message || "Profile Update Failed");
       }
-    };
+
+      toast.success(data.message || "Profile Updated Successfully");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Something went wrong");
+    }
+  };
 
   // ============================
   // CHANGE PASSWORD
   // ============================
 
-  const handleChangePassword =
-    async (e) => {
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
 
-      e.preventDefault();
+    // PASSWORD MATCH CHECK
 
-      // PASSWORD MATCH CHECK
+    if (newPassword !== confirmPassword) {
+      return toast.error("New Password and Confirm Password do not match");
+    }
 
-      if (
-        newPassword !==
-        confirmPassword
-      ) {
+    try {
+      const token = localStorage.getItem("token");
 
-        return toast.error(
-          "New Password and Confirm Password do not match"
-        );
+      const response = await fetch(
+        "http://localhost:8080/api/user/change-password",
+        {
+          method: "PUT",
+
+          headers: {
+            "Content-Type": "application/json",
+
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            currentPassword,
+            newPassword,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      // ERROR
+
+      if (!response.ok) {
+        return toast.error(data.message || "Password Change Failed");
       }
 
-      try {
+      // SUCCESS
 
-        const token =
-          localStorage.getItem(
-            "token"
-          );
+      toast.success(data.message || "Password Updated Successfully");
 
-        const response =
-          await fetch(
-            "http://localhost:8080/api/user/change-password",
-            {
-              method: "PUT",
+      setCurrentPassword("");
 
-              headers: {
-                "Content-Type":
-                  "application/json",
+      setNewPassword("");
 
-                Authorization:
-                  `Bearer ${token}`,
-              },
+      setConfirmPassword("");
+    } catch (error) {
+      console.log(error);
 
-              body: JSON.stringify({
-                currentPassword,
-                newPassword,
-              }),
-            }
-          );
-
-        const data =
-          await response.json();
-
-        // ERROR
-
-        if (!response.ok) {
-
-          return toast.error(
-            data.message ||
-            "Password Change Failed"
-          );
-        }
-
-        // SUCCESS
-
-        toast.success(
-          data.message ||
-          "Password Updated Successfully"
-        );
-
-        setCurrentPassword("");
-
-        setNewPassword("");
-
-        setConfirmPassword("");
-
-      } catch (error) {
-
-        console.log(error);
-
-        toast.error(
-          "Something went wrong"
-        );
-      }
-    };
+      toast.error("Something went wrong");
+    }
+  };
 
   // ============================
   // USE EFFECT
   // ============================
 
   useEffect(() => {
-
     getProfile();
-
   }, []);
 
   return (
-
     <AdminLayout>
-
       <div
         className="
         w-full
@@ -251,11 +172,9 @@ const Settings = () => {
         sm:p-6
       "
       >
-
         {/* HEADER */}
 
         <div className="mb-8">
-
           <h1
             className="
             text-3xl
@@ -267,10 +186,7 @@ const Settings = () => {
             Admin Settings
           </h1>
 
-          <p className="text-gray-500 mt-2">
-            Manage admin account settings
-          </p>
-
+          <p className="text-gray-500 mt-2">Manage admin account settings</p>
         </div>
 
         {/* MAIN GRID */}
@@ -283,7 +199,6 @@ const Settings = () => {
           gap-6
         "
         >
-
           {/* PROFILE CARD */}
 
           <div
@@ -294,30 +209,18 @@ const Settings = () => {
             p-6
           "
           >
-
             <div className="mb-6">
-
               <h2 className="text-2xl font-bold text-gray-800">
                 Admin Profile
               </h2>
 
-              <p className="text-gray-500 mt-1">
-                Update admin information
-              </p>
-
+              <p className="text-gray-500 mt-1">Update admin information</p>
             </div>
 
-            <form
-              onSubmit={
-                handleUpdateProfile
-              }
-              className="space-y-5"
-            >
-
+            <form onSubmit={handleUpdateProfile} className="space-y-5">
               {/* NAME */}
 
               <div>
-
                 <label className="block mb-2 font-semibold text-gray-700">
                   Full Name
                 </label>
@@ -325,15 +228,11 @@ const Settings = () => {
                 <input
                   type="text"
                   value={name}
-                  onChange={(e) =>
-                    setName(
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => setName(e.target.value)}
                   placeholder="Enter name"
                   className="
                   w-full
-                  h-[55px]
+                  h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -343,13 +242,11 @@ const Settings = () => {
                 "
                   required
                 />
-
               </div>
 
               {/* EMAIL */}
 
               <div>
-
                 <label className="block mb-2 font-semibold text-gray-700">
                   Email
                 </label>
@@ -357,15 +254,11 @@ const Settings = () => {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) =>
-                    setEmail(
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter email"
                   className="
                   w-full
-                  h-[55px]
+                  h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -375,13 +268,11 @@ const Settings = () => {
                 "
                   required
                 />
-
               </div>
 
               {/* PHONE */}
 
               <div>
-
                 <label className="block mb-2 font-semibold text-gray-700">
                   Phone
                 </label>
@@ -389,15 +280,11 @@ const Settings = () => {
                 <input
                   type="text"
                   value={phone}
-                  onChange={(e) =>
-                    setPhone(
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => setPhone(e.target.value)}
                   placeholder="Enter phone"
                   className="
                   w-full
-                  h-[55px]
+                  h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -406,7 +293,6 @@ const Settings = () => {
                   focus:border-black
                 "
                 />
-
               </div>
 
               {/* BUTTON */}
@@ -415,7 +301,7 @@ const Settings = () => {
                 type="submit"
                 className="
                 w-full
-                h-[55px]
+                h-13.75
                 bg-blue-600
                 hover:bg-blue-700
                 text-white
@@ -426,9 +312,7 @@ const Settings = () => {
               >
                 Update Profile
               </button>
-
             </form>
-
           </div>
 
           {/* PASSWORD CARD */}
@@ -441,9 +325,7 @@ const Settings = () => {
             p-6
           "
           >
-
             <div className="mb-6">
-
               <h2 className="text-2xl font-bold text-gray-800">
                 Change Password
               </h2>
@@ -451,38 +333,24 @@ const Settings = () => {
               <p className="text-gray-500 mt-1">
                 Update admin password securely
               </p>
-
             </div>
 
-            <form
-              onSubmit={
-                handleChangePassword
-              }
-              className="space-y-5"
-            >
-
+            <form onSubmit={handleChangePassword} className="space-y-5">
               {/* CURRENT PASSWORD */}
 
               <div>
-
                 <label className="block mb-2 font-semibold text-gray-700">
                   Current Password
                 </label>
 
                 <input
                   type="password"
-                  value={
-                    currentPassword
-                  }
-                  onChange={(e) =>
-                    setCurrentPassword(
-                      e.target.value
-                    )
-                  }
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="Enter current password"
                   className="
                   w-full
-                  h-[55px]
+                  h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -492,13 +360,11 @@ const Settings = () => {
                 "
                   required
                 />
-
               </div>
 
               {/* NEW PASSWORD */}
 
               <div>
-
                 <label className="block mb-2 font-semibold text-gray-700">
                   New Password
                 </label>
@@ -506,15 +372,11 @@ const Settings = () => {
                 <input
                   type="password"
                   value={newPassword}
-                  onChange={(e) =>
-                    setNewPassword(
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
                   className="
                   w-full
-                  h-[55px]
+                  h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -524,31 +386,23 @@ const Settings = () => {
                 "
                   required
                 />
-
               </div>
 
               {/* CONFIRM PASSWORD */}
 
               <div>
-
                 <label className="block mb-2 font-semibold text-gray-700">
                   Confirm Password
                 </label>
 
                 <input
                   type="password"
-                  value={
-                    confirmPassword
-                  }
-                  onChange={(e) =>
-                    setConfirmPassword(
-                      e.target.value
-                    )
-                  }
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm new password"
                   className="
                   w-full
-                  h-[55px]
+                  h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -558,7 +412,6 @@ const Settings = () => {
                 "
                   required
                 />
-
               </div>
 
               {/* BUTTON */}
@@ -567,7 +420,7 @@ const Settings = () => {
                 type="submit"
                 className="
                 w-full
-                h-[55px]
+                h-13.75
                 bg-black
                 hover:bg-gray-800
                 text-white
@@ -578,15 +431,10 @@ const Settings = () => {
               >
                 Update Password
               </button>
-
             </form>
-
           </div>
-
         </div>
-
       </div>
-
     </AdminLayout>
   );
 };

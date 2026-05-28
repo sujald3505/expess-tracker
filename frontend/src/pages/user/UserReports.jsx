@@ -202,7 +202,7 @@ const Reports = () => {
               font-bold
               mt-4
               text-blue-600
-              break-words
+              wrap-break-words
             "
             >
               ₹ {summary.balance}
@@ -236,7 +236,7 @@ const Reports = () => {
               font-bold
               mt-4
               text-green-600
-              break-words
+              wrap-break-words
             "
             >
               ₹ {summary.totalIncome}
@@ -270,7 +270,7 @@ const Reports = () => {
               font-bold
               mt-4
               text-red-600
-              break-words
+              wrap-break-words
             "
             >
               ₹ {summary.totalExpense}
@@ -323,9 +323,9 @@ const Reports = () => {
             <div
               className="
               w-full
-              h-[320px]
-              sm:h-[380px]
-              md:h-[420px]
+              h-80
+              sm:h-95
+              md:h-105
             "
             >
               <ResponsiveContainer width="100%" height="100%">
@@ -380,9 +380,9 @@ const Reports = () => {
             <div
               className="
               w-full
-              h-[320px]
-              sm:h-[380px]
-              md:h-[420px]
+              h-80
+              sm:h-95
+              md:h-105
             "
             >
               <ResponsiveContainer width="100%" height="100%">

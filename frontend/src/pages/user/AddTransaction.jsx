@@ -383,8 +383,8 @@ const AddTransaction = () => {
                   placeholder="Enter title"
                   className="
                   w-full
-                  h-[50px]
-                  md:h-[55px]
+                  h-12.5
+                  md:h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -412,8 +412,8 @@ const AddTransaction = () => {
                   placeholder="Enter amount"
                   className="
                   w-full
-                  h-[50px]
-                  md:h-[55px]
+                  h-12.5
+                  md:h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -439,8 +439,8 @@ const AddTransaction = () => {
                   onChange={handleChange}
                   className="
                   w-full
-                  h-[50px]
-                  md:h-[55px]
+                  h-12.5
+                  md:h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -475,8 +475,8 @@ const AddTransaction = () => {
                   onChange={handleChange}
                   className="
                   w-full
-                  h-[50px]
-                  md:h-[55px]
+                  h-12.75
+                  md:h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -520,8 +520,8 @@ const AddTransaction = () => {
                   onChange={handleChange}
                   className="
                   w-full
-                  h-[50px]
-                  md:h-[55px]
+                  h-12.5
+                  md:h-13.75
                   border
                   border-gray-300
                   rounded-xl
@@ -541,8 +541,8 @@ const AddTransaction = () => {
               type="submit"
               className="
               w-full
-              h-[50px]
-              md:h-[55px]
+              h-12.5
+              md:h-13.75
               bg-black
               hover:bg-gray-800
               text-white

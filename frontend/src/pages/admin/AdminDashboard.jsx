@@ -402,7 +402,7 @@ const AdminDashboard = () => {
         <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
 
           {/* TOTAL USERS */}
-          <div className="w-full h-[170px] bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between">
+          <div className="w-full h-42.5 bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between">
             <div>
               <h3 className="text-gray-500 text-lg">
                 Total Users
@@ -412,13 +412,13 @@ const AdminDashboard = () => {
               </h1>
             </div>
 
-            <div className="w-[90px] h-[90px] bg-blue-100 rounded-full flex items-center justify-center text-4xl">
+            <div className="w-22.5 h-22.5 bg-blue-100 rounded-full flex items-center justify-center text-4xl">
               👥
             </div>
           </div>
 
           {/* ACTIVE USERS */}
-          <div className="w-full h-[170px] bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between">
+          <div className="w-full h-42.5 bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between">
             <div>
               <h3 className="text-gray-500 text-lg">
                 Active Users
@@ -428,7 +428,7 @@ const AdminDashboard = () => {
               </h1>
             </div>
 
-            <div className="w-[90px] h-[90px] bg-green-100 rounded-full flex items-center justify-center text-4xl">
+            <div className="w-22.5 h-22.5 bg-green-100 rounded-full flex items-center justify-center text-4xl">
               ✅
             </div>
           </div>
@@ -436,12 +436,12 @@ const AdminDashboard = () => {
         </div>
 
         {/* WELCOME SECTION */}
-        <div className="w-full min-h-[220px] mt-8 bg-white rounded-2xl shadow-lg p-8 flex flex-col justify-center">
+        <div className="w-full min-h-55 mt-8 bg-white rounded-2xl shadow-lg p-8 flex flex-col justify-center">
           <h2 className="text-3xl font-semibold text-gray-800 mb-5">
             Welcome Admin 👋
           </h2>
 
-          <p className="text-gray-600 text-lg leading-8 max-w-[1000px]">
+          <p className="text-gray-600 text-lg leading-8 max-w-250">
             This is your Expense Tracker admin dashboard.
             Here you can manage users, transactions,
             reports, analytics, and system settings.
